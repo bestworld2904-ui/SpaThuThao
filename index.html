@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPA TYCOON 3D V2.7 – Đèn Đêm, Menu Dịch Vụ, Phân Khu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <title>SPA TYCOON 3D V2.8 – Mobile & Tablet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -121,6 +121,153 @@
         .spa-speech-staff {border-color:#6ee7b7;background:#f0fdf4;}
         .spa-speech-staff::after{border-color:#6ee7b7;}
         #living-weather-panel {width:min(288px,calc(100vw - 24px));}
+
+        /* V2.8 RESPONSIVE / TOUCH LAYER. Hidden means hidden even when parent is grid. */
+        html,body {height:100%;height:100dvh;overscroll-behavior:none;}
+        #canvas-container, #canvas-container canvas {touch-action:none;overscroll-behavior:none;}
+        button, select, label, input[type="checkbox"] {touch-action:manipulation;}
+        button { -webkit-tap-highlight-color:transparent; }
+        .game-panel, #drawer-content, #spa-control-content, #train-modal-body, #insp-body {
+            overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+        }
+        #mobile-hud {display:none;}
+        #mobile-gesture-guide {display:none;}
+        #mobile-camera-switch {display:none;}
+        #mobile-render-settings {display:flex;}
+        #mobile-render-settings select {font-size:13px;min-width:0;}
+        @media (max-width: 1023px), (pointer: coarse) {
+            .game-btn:active {transform:scale(.96);}
+            #spa-control-content, #drawer-content, #train-modal-body, #insp-body {touch-action:pan-y;}
+            #mobile-render-settings {display:flex;}
+        }
+        @media (max-width: 767px) {
+            header {display:none !important;}
+            #mobile-hud {
+                display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;
+                position:fixed;z-index:31;left:max(7px,env(safe-area-inset-left));
+                right:max(7px,env(safe-area-inset-right));top:calc(5px + env(safe-area-inset-top));
+                padding:5px;border:1px solid rgba(255,255,255,.95);border-radius:15px;
+                background:rgba(255,255,255,.96);box-shadow:0 5px 16px #24324e30;
+                pointer-events:none;
+            }
+            #mobile-hud .metric {min-width:0;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+            #mobile-hud .metric + .metric {border-left:1px solid #e2e8f0;}
+            #mobile-hud .metric-label {font-weight:900;color:#64748b;font-size:9px;line-height:11px;white-space:nowrap;}
+            #mobile-hud .metric-value {font-weight:900;color:#273449;font-size:12px;line-height:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+            #mobile-hud .metric.money .metric-value{color:#0f9465}
+            #mobile-hud .metric.customer .metric-value{color:#d97706}
+            #spa-control-dock {
+                top:calc(65px + env(safe-area-inset-top)) !important;
+                right:max(7px,env(safe-area-inset-right)) !important;
+                width:min(210px,56vw) !important;
+                max-width:calc(100vw - 14px);
+            }
+            #spa-control-dock.is-expanded {width:min(330px,calc(100vw - 14px)) !important;}
+            #spa-control-content {max-height:min(54dvh,440px) !important;}
+            #spa-control-content button {min-height:44px;}
+            #spa-control-content select {font-size:16px !important;}
+            #living-weather-panel{width:100%;}
+            aside.fixed.left-3.top-28 {
+                top:auto !important;left:max(5px,env(safe-area-inset-left)) !important;
+                right:max(5px,env(safe-area-inset-right)) !important;
+                bottom:calc(72px + env(safe-area-inset-bottom)) !important;
+                display:block;width:auto;max-height:none;
+            }
+            aside.fixed.left-3.top-28 > div:first-child {
+                display:flex;flex-direction:row;gap:5px;overflow-x:auto;overflow-y:hidden;
+                width:100%;padding:3px 1px 8px;scrollbar-width:none;
+                touch-action:pan-x;scroll-snap-type:x proximity;
+            }
+            aside.fixed.left-3.top-28 > div:first-child::-webkit-scrollbar{display:none;}
+            aside.fixed.left-3.top-28 > div:first-child > button {
+                flex:0 0 61px !important;width:61px !important;height:53px !important;
+                min-height:53px;scroll-snap-align:start;
+                border-radius:14px;font-size:10px;
+            }
+            aside.fixed.left-3.top-28 > div:first-child > button i {font-size:17px !important;}
+            aside.fixed.left-3.top-28 > #left-drawer {
+                position:fixed;bottom:calc(142px + env(safe-area-inset-bottom));
+                left:max(7px,env(safe-area-inset-left));right:max(7px,env(safe-area-inset-right));
+                top:auto;width:auto !important;max-height:min(60dvh,500px);
+                border-radius:17px;z-index:34;
+            }
+            #drawer-content{max-height:min(50dvh,430px) !important;padding:10px !important;}
+            #drawer-content button,#drawer-content select {min-height:42px;}
+            #drawer-content input,#drawer-content select,#drawer-content textarea,
+            #sandbox-auth-modal input, #training-modal input {font-size:16px;}
+            footer.fixed.bottom-3 {
+                left:max(5px,env(safe-area-inset-left)) !important;
+                right:max(5px,env(safe-area-inset-right)) !important;
+                bottom:calc(5px + env(safe-area-inset-bottom)) !important;
+                transform:none !important;justify-content:center;
+            }
+            footer.fixed.bottom-3 > div {
+                width:100%;padding:5px !important;gap:5px !important;
+                justify-content:space-between;overflow-x:auto;scrollbar-width:none;
+                border-radius:15px;touch-action:pan-x;
+            }
+            footer.fixed.bottom-3 > div::-webkit-scrollbar{display:none;}
+            footer.fixed.bottom-3 button {
+                min-width:44px !important;width:44px !important;height:44px !important;
+                padding:0 !important;flex:0 0 44px !important;border-radius:12px;
+            }
+            footer.fixed.bottom-3 > div > div.h-6{display:none;}
+            #mobile-camera-switch {display:flex;align-items:center;justify-content:center;}
+            #build-mode-banner {
+                top:calc(115px + env(safe-area-inset-top)) !important;left:50% !important;
+                width:calc(100vw - 14px);max-width:460px;
+                padding:8px 10px !important;gap:6px !important;
+                flex-wrap:wrap;justify-content:center;
+                max-height:30dvh;overflow-y:auto;
+            }
+            #build-mode-banner > div:first-child{width:100%;justify-content:center;font-size:11px !important;text-align:center;min-width:0;}
+            #build-mode-banner button{min-height:42px;font-size:12px !important;}
+            #entity-inspector {
+                bottom:calc(145px + env(safe-area-inset-bottom)) !important;
+                left:max(7px,env(safe-area-inset-left)) !important;
+                right:max(7px,env(safe-area-inset-right)) !important;
+                transform:none !important;width:auto !important;max-height:55dvh;overflow-y:auto;padding:10px !important;
+            }
+            #toast-box {top:calc(106px + env(safe-area-inset-top)) !important;max-width:95vw;}
+            #training-modal,#sandbox-auth-modal{padding:8px !important;align-items:center;}
+            #training-modal > div,#sandbox-auth-modal > div{max-height:calc(92dvh - env(safe-area-inset-bottom));overflow-y:auto;}
+            #mobile-gesture-guide {
+                display:flex;position:fixed;left:max(8px,env(safe-area-inset-left));
+                top:calc(65px + env(safe-area-inset-top));z-index:12;
+                max-width:145px;background:rgba(15,23,42,.82);color:#fff;
+                padding:7px 9px;border-radius:12px;font-size:10px;font-weight:800;line-height:1.35;
+                pointer-events:none;
+            }
+            .spa-npc-speech {font-size:10px;max-width:142px;}
+        }
+        /* Tablets: side panels become scrollable trays, not overlapping HUD. */
+        @media (min-width:768px) and (max-width:1023px) {
+            header {left:8px !important;right:8px !important;top:8px !important;gap:5px !important;}
+            header > div:first-child{gap:5px !important;}
+            header > div:last-child{gap:5px !important;}
+            header .game-panel{padding:5px 8px !important;}
+            #spa-control-dock{top:calc(105px + env(safe-area-inset-top)) !important;right:8px !important;width:265px !important;}
+            #spa-control-content{max-height:calc(100dvh - 230px) !important;}
+            aside.fixed.left-3.top-28{left:8px !important;top:105px !important;bottom:75px !important;}
+            aside.fixed.left-3.top-28 > div:first-child>button{width:58px !important;height:58px !important;}
+            aside.fixed.left-3.top-28 > #left-drawer {width:min(330px,calc(100vw - 390px)) !important;}
+            footer.fixed.bottom-3{bottom:calc(7px + env(safe-area-inset-bottom)) !important;}
+            #entity-inspector{bottom:calc(80px + env(safe-area-inset-bottom)) !important;}
+            #mobile-camera-switch{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;}
+        }
+        @media (max-width:767px) and (orientation:landscape) {
+            #spa-control-dock {top:calc(59px + env(safe-area-inset-top)) !important;}
+            #spa-control-content {max-height:48dvh !important;}
+            aside.fixed.left-3.top-28 > #left-drawer{max-height:54dvh;bottom:calc(125px + env(safe-area-inset-bottom));}
+            #drawer-content{max-height:42dvh !important;}
+            #build-mode-banner{top:calc(60px + env(safe-area-inset-top)) !important;}
+            #mobile-gesture-guide{display:none;}
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .staff-tag-focused {animation:none !important;}
+            .game-btn{transition:none !important;}
+        }
+
     </style>
 </head>
 <body class="relative select-none">
@@ -217,6 +364,16 @@
             </div>
         </div>
     </header>
+
+
+    <!-- V2.8: compact essential HUD shown only on phones; desktop HUD stays intact. -->
+    <div id="mobile-hud" aria-label="Thông tin Spa cơ bản">
+      <div class="metric money"><span class="metric-label">💰 Tiền</span><span id="mobile-money" class="metric-value">$2,600</span></div>
+      <div class="metric customer"><span class="metric-label">👥 Khách</span><span id="mobile-customers" class="metric-value">0/6</span></div>
+      <div class="metric"><span class="metric-label">🕒 Giờ</span><span id="mobile-time" class="metric-value">Ngày 1 · 06:00</span></div>
+      <div class="metric"><span class="metric-label">⭐ Cấp / Sao</span><span id="mobile-level" class="metric-value">1 · 4.3★</span></div>
+    </div>
+    <div id="mobile-gesture-guide" aria-hidden="true">☝️ Kéo xoay · ✌️ 2 ngón kéo/zoom · Chạm chọn</div>
 
     <!-- LEFT SIDEBAR: QUẢN LÝ TỔNG HỢP (4 Core Buttons + Expandable Drawer) -->
     <aside class="fixed left-3 top-28 bottom-20 z-30 flex items-start gap-2.5 pointer-events-none">
@@ -329,6 +486,16 @@
                 </section>
 
                 <div class="h-px bg-slate-100"></div>
+
+
+                <!-- V2.8 local graphics preference: not stored in game save files. -->
+                <section id="mobile-render-settings" class="items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200">
+                    <label for="spa-quality-select" class="text-[11px] font-extrabold text-slate-700">⚙️ Đồ họa 3D</label>
+                    <select id="spa-quality-select" onchange="MobileUX.setQuality(this.value)" class="min-h-10 rounded-lg border border-slate-300 bg-white px-2 text-slate-700 font-bold">
+                        <option value="auto">Tự động</option><option value="smooth">Mượt</option>
+                        <option value="balanced">Cân bằng</option><option value="pretty">Đẹp</option>
+                    </select>
+                </section>
 
                 <!-- Existing weather widget; its forecast can be expanded separately -->
                 <section id="living-weather-panel" class="rounded-xl border border-sky-100 overflow-hidden" aria-label="Thời tiết Spa">
@@ -454,6 +621,8 @@
     <!-- BOTTOM CAMERA & VIEW CONTROLS -->
     <footer class="fixed bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 pointer-events-auto">
         <div class="game-panel rounded-2xl px-3 py-2 flex items-center gap-2">
+
+            <button id="mobile-camera-switch" onclick="MobileUX.toggleCameraMode()" class="game-btn w-10 h-10 rounded-xl bg-indigo-600 text-white text-xs font-black" title="Đổi chế độ xoay / kéo camera" aria-label="Đổi chế độ điều khiển camera"><i class="fa-solid fa-hand"></i></button>
             <button onclick="cameraRotate(-0.35)" class="game-btn px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-extrabold flex items-center gap-1.5" title="Xoay Trái">
                 <i class="fa-solid fa-rotate-left"></i>
                 <span class="hidden sm:inline">Xoay Trái</span>
@@ -1068,13 +1237,14 @@
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x8899a6);
 
-            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.5, 150);
+            camera = new THREE.PerspectiveCamera(MobileUX.cameraFov(), window.innerWidth / window.innerHeight, 0.5, 150);
+            camRadius = MobileUX.defaultRadius();
             updateCameraTransform();
 
-            renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+            renderer = new THREE.WebGLRenderer({ antialias: !MobileUX.isTouch, powerPreference: 'high-performance' });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.shadowMap.enabled = true;
+            renderer.setPixelRatio(MobileUX.pixelRatio());
+            renderer.shadowMap.enabled = MobileUX.preset().shadows;
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
 
@@ -1086,8 +1256,9 @@
             const dirLight = new THREE.DirectionalLight(0xfffbeb, 0.85);
             dirLight.position.set(16, 26, 18);
             dirLight.castShadow = true;
-            dirLight.shadow.mapSize.width = 2048;
-            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.mapSize.width = MobileUX.preset().shadowSize;
+            dirLight.shadow.mapSize.height = MobileUX.preset().shadowSize;
+            MobileUX.shadowLight = dirLight;
             dirLight.shadow.camera.near = 2;
             dirLight.shadow.camera.far = 70;
             const d = 18;
@@ -1194,7 +1365,7 @@
         function cameraReset() {
             camDesiredTarget = null;
             camTarget.set(0, 0, 0);
-            camRadius = 21;
+            camRadius = MobileUX.defaultRadius();
             camTheta = Math.PI / 4;
             camPhi = 0.88;
             updateCameraTransform();
@@ -1202,8 +1373,11 @@
 
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
+            camera.fov = MobileUX.cameraFov();
+            if (MobileUX.isTouch && window.innerWidth<600) camRadius=Math.max(camRadius,28);
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+            MobileUX.applyQuality();
         }
 
         /********************************************************************
@@ -3189,46 +3363,111 @@
         /********************************************************************
          * 10. 3D RAYCASTING, BUILD MODE & INSPECTOR
          ********************************************************************/
+        // V2.8 unified pointer input, preserving original desktop behavior.
+        // One touch rotates (or pans in pan mode); two touches pinch + pan.
+        // A tap is emitted only if no drag or second finger occurred.
         function setupInteractionEvents(domElement) {
-            domElement.addEventListener('pointerdown', (e) => {
-                if (e.button !== 0 && e.pointerType === 'mouse') return;
-                isDraggingCamera = true;
-                prevPointer = { x: e.clientX, y: e.clientY };
-                pointerDownPos = { x: e.clientX, y: e.clientY };
-            });
-
-            window.addEventListener('pointermove', (e) => {
-                // Update Build Ghost Preview if in Build Mode
-                if (gameState.buildMode.active && floorMesh) {
-                    updateBuildGhostPosition(e);
-                }
-
-                if (!isDraggingCamera) return;
-                const dx = e.clientX - prevPointer.x;
-                const dy = e.clientY - prevPointer.y;
-                prevPointer = { x: e.clientX, y: e.clientY };
-
-                camTheta -= dx * 0.007;
-                camPhi -= dy * 0.006;
+            const pointers = new Map();
+            let tap = null, pinch = null;
+            let hadMultiTouch = false;
+            const cameraPan = (dx, dy) => {
+                const scale = camRadius * 0.0023;
+                const right = new THREE.Vector3(Math.cos(camTheta), 0, -Math.sin(camTheta));
+                const forward = new THREE.Vector3(Math.sin(camTheta), 0, Math.cos(camTheta));
+                camTarget.addScaledVector(right, -dx * scale);
+                camTarget.addScaledVector(forward, dy * scale);
+                camDesiredTarget = null;
                 updateCameraTransform();
-            });
+            };
+            const centerAndDistance = () => {
+                const [a,b] = [...pointers.values()];
+                return {
+                    x:(a.x+b.x)/2,y:(a.y+b.y)/2,
+                    distance:Math.max(8,Math.hypot(a.x-b.x,a.y-b.y))
+                };
+            };
+            const reset = () => {pointers.clear();tap=null;pinch=null;hadMultiTouch=false;isDraggingCamera=false;};
 
-            window.addEventListener('pointerup', (e) => {
-                if (!isDraggingCamera) return;
-                isDraggingCamera = false;
-                const moveDist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
-                if (moveDist < 6) {
-                    handleCanvasClick(e);
+            domElement.addEventListener('pointerdown', e => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                // Zone tool uses the canvas capture listener in SpaWorldV27.
+                if (SpaWorldV27.zoneTool) return;
+                e.preventDefault();
+                try {domElement.setPointerCapture(e.pointerId);} catch (_) {}
+                pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+                if (pointers.size===1) {
+                    tap={id:e.pointerId,x:e.clientX,y:e.clientY,at:performance.now(),moved:false};
+                    pinch=null;hadMultiTouch=false;
+                } else {
+                    hadMultiTouch=true;
+                    tap=null;
+                    pinch=pointers.size===2 ? centerAndDistance() : null;
+                }
+                isDraggingCamera=true;
+                prevPointer={x:e.clientX,y:e.clientY};
+                pointerDownPos={x:e.clientX,y:e.clientY};
+            });
+            window.addEventListener('pointermove',e => {
+                if (SpaWorldV27.zoneTool) return;
+                const own=pointers.get(e.pointerId);
+                if (!own) {
+                    // Mouse hover must keep updating build ghost (desktop UX).
+                    if (e.pointerType==='mouse' && gameState.buildMode.active && floorMesh)
+                        updateBuildGhostPosition(e);
+                    return;
+                }
+                const dx=e.clientX-own.x, dy=e.clientY-own.y;
+                own.x=e.clientX;own.y=e.clientY;
+                if (tap && tap.id===e.pointerId &&
+                   Math.hypot(e.clientX-tap.x,e.clientY-tap.y)>9) tap.moved=true;
+                // Build previews are updated only by their own pointer, not by a second finger.
+                if (gameState.buildMode.active && floorMesh && pointers.size===1) updateBuildGhostPosition(e);
+                if (pointers.size===2 && e.pointerType!=='mouse') {
+                    const now=centerAndDistance();
+                    if (pinch) {
+                        camRadius *= pinch.distance / now.distance;
+                        cameraPan(now.x-pinch.x,now.y-pinch.y);
+                    }
+                    pinch=now;
+                    updateCameraTransform();
+                    return;
+                }
+                if (pointers.size!==1) return;
+                if (e.pointerType==='touch' && MobileUX.panMode && !gameState.buildMode.active) {
+                    cameraPan(dx,dy);
+                } else {
+                    camTheta -= dx*0.007;
+                    camPhi -= dy*0.006;
+                    camDesiredTarget=null;
+                    updateCameraTransform();
                 }
             });
-
-            domElement.addEventListener('wheel', (e) => {
+            const endPointer=(e,cancel=false) => {
+                if (!pointers.has(e.pointerId)) return;
+                const allowedClick = !cancel && !hadMultiTouch && tap && tap.id===e.pointerId &&
+                    !tap.moved && Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<10 &&
+                    performance.now()-tap.at<600;
+                pointers.delete(e.pointerId);
+                if (pointers.size===1) {
+                    // After pinch, remaining finger starts fresh. Never create a phantom tap.
+                    pinch=null;tap=null;
+                } else if (pointers.size===0) {
+                    isDraggingCamera=false;pinch=null;tap=null;hadMultiTouch=false;
+                }
+                if (allowedClick) handleCanvasClick(e);
+            };
+            window.addEventListener('pointerup',e=>endPointer(e));
+            window.addEventListener('pointercancel',e=>endPointer(e,true));
+            window.addEventListener('blur',reset);
+            domElement.addEventListener('contextmenu',e=>e.preventDefault());
+            domElement.addEventListener('wheel',e=>{
                 e.preventDefault();
-                cameraZoom(e.deltaY * 0.012);
-            }, { passive: false });
+                cameraZoom(e.deltaY*0.012);
+            },{passive:false});
         }
 
         function startBuildMode(itemId) {
+            if(window.innerWidth<768) setSpaControlDockExpanded(false,false);
             const def = BUILD_CATALOG[itemId];
             if (!def) return;
             if (getUnlockLevel() < def.unlockLevel) {
@@ -3245,7 +3484,7 @@
 
             gridHelperGroup.visible = true;
             document.getElementById('build-mode-banner').classList.remove('hidden');
-            document.getElementById('build-mode-status').textContent = `Đang đặt mới: ${def.name} ($${def.cost}) • Click lên sàn để đặt`;
+            document.getElementById('build-mode-status').textContent = `Đang đặt mới: ${def.name} ($${def.cost}) • Chạm lên sàn để đặt`;
 
             buildGhostMesh = createFurnitureMesh(itemId, 1);
             buildGhostMesh.traverse(child => {
@@ -3261,6 +3500,7 @@
 
         // Start moving an already-placed object for FREE
         function startMoveFurniture(uid) {
+            if(window.innerWidth<768) setSpaControlDockExpanded(false,false);
             const item = placedItems.find(i => i.uid === uid);
             if (!item) return;
             if (item.occupiedBy) {
@@ -3710,6 +3950,7 @@
             document.getElementById('hud-clock').textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
 
             renderQuestsList();
+            MobileUX.syncHud();
         }
 
         function toggleLeftTab(tabName) {
@@ -4349,6 +4590,7 @@
             if (!details || !button) return;
             const isExpanded = !!expanded;
             details.classList.toggle('hidden', !isExpanded);
+            document.getElementById('spa-control-dock')?.classList.toggle('is-expanded',isExpanded);
             button.setAttribute('aria-expanded', String(isExpanded));
             button.title = isExpanded ? 'Thu gọn bảng điều khiển Spa' : 'Mở bảng điều khiển Spa';
             if (chevron) chevron.className = `fa-solid fa-chevron-${isExpanded ? 'up' : 'down'} text-slate-500 text-xs w-3 text-center`;
@@ -4365,7 +4607,7 @@
             let expanded = false; // Start small for first-time players.
             try { expanded = localStorage.getItem(SPA_CONTROL_DOCK_PREF) === '1'; }
             catch (error) { /* Fall back to collapsed mode. */ }
-            setSpaControlDockExpanded(expanded, false);
+            setSpaControlDockExpanded(window.innerWidth < 768 ? false : expanded, false);
         }
 
         function toggleRightWidget() {
@@ -4853,6 +5095,7 @@
             updateSimulation(dt);
             if (Math.floor(now / 250) !== Math.floor((now - dt * 1000) / 250)) updateHUD();
             renderer.render(scene, camera);
+            MobileUX.tickPerformance(now);
         }
 
 
@@ -6257,6 +6500,7 @@
             },
             startTool(kind,themeId=null) {
                 if(!['wall','door','erase','paint'].includes(kind)) return;
+                if(window.innerWidth<768) setSpaControlDockExpanded(false,false);
                 exitBuildMode(); closeInspector(); closeLeftDrawer();
                 this.tool={kind,themeId};
                 this.edgeSide=0;
@@ -6265,7 +6509,7 @@
                 gridHelperGroup.visible=true;
                 document.getElementById('build-mode-banner').classList.remove('hidden');
                 const text=kind==='wall'?'Tường $45':kind==='door'?'Cửa vòm $90':kind==='erase'?'Xóa kết cấu':'Sơn sàn $12/ô';
-                document.getElementById('build-mode-status').textContent=`${text} • Click trên sàn • R đổi hướng cạnh • Esc thoát`;
+                document.getElementById('build-mode-status').textContent=`${text} • Chạm sàn để đặt • Xoay để đổi cạnh • Thoát để hủy`;
                 const preview=new THREE.Mesh(new THREE.BoxGeometry(kind==='paint'?0.92:1,kind==='paint'?0.04:1.4,kind==='paint'?0.92:0.12),
                     new THREE.MeshBasicMaterial({color:0x86efac,transparent:true,opacity:0.55,depthWrite:false}));
                 preview.name='spa_v2_preview';
@@ -7376,6 +7620,7 @@
             },
             refreshDrawer() {if(gameState.activeTab)renderActiveDrawer();},
             beginZoneSelection() {
+                if(window.innerWidth<768) setSpaControlDockExpanded(false,false);
                 const type=document.getElementById('spa-zone-kind')?.value||'waiting';
                 if(!this.zoneTypes.some(t=>t.id===type))return;
                 exitBuildMode();closeInspector();closeLeftDrawer();
@@ -7383,7 +7628,7 @@
                 gridHelperGroup.visible=true;
                 gameState.buildMode.active=true;
                 document.getElementById('build-mode-banner').classList.remove('hidden');
-                document.getElementById('build-mode-status').textContent=`🗺️ Giữ chuột và quét chọn khu vực: ${this.zoneTypes.find(t=>t.id===type).label} • Esc để hủy`;
+                document.getElementById('build-mode-status').textContent=`🗺️ Chạm kéo trên sàn để chọn khu vực: ${this.zoneTypes.find(t=>t.id===type).label} • Esc để hủy`;
                 const material=new THREE.MeshBasicMaterial({color:this.zoneTypes.find(t=>t.id===type).color,transparent:true,opacity:.52,depthWrite:false});
                 this.zonePreview=new THREE.Mesh(new THREE.BoxGeometry(1,.035,1),material);
                 this.zonePreview.visible=false;
@@ -7402,23 +7647,30 @@
                 canvas.addEventListener('pointerdown',e=>{
                     if(!this.zoneTool || (e.pointerType==='mouse'&&e.button!==0))return;
                     const cell=SpaV2.toolGridAt(e);if(!cell)return;
+                    if(this.zoneTool.start || this.zoneTool.pointerId != null)return;
+                    this.zoneTool.pointerId=e.pointerId;
                     this.zoneTool.start=cell;this.zoneTool.end=cell;
                     e.stopImmediatePropagation();e.preventDefault();
                     try{canvas.setPointerCapture(e.pointerId);}catch(_err){}
                     this.drawZonePreview();
                 },true);
                 window.addEventListener('pointermove',e=>{
-                    if(!this.zoneTool?.start)return;
+                    if(!this.zoneTool?.start || e.pointerId!==this.zoneTool.pointerId)return;
                     const cell=SpaV2.toolGridAt(e);
                     if(cell){this.zoneTool.end=cell;this.drawZonePreview();}
                     e.stopImmediatePropagation();e.preventDefault();
                 },true);
                 window.addEventListener('pointerup',e=>{
-                    if(!this.zoneTool?.start)return;
+                    if(!this.zoneTool?.start || e.pointerId!==this.zoneTool.pointerId)return;
                     const start=this.zoneTool.start,end=this.zoneTool.end||start,kind=this.zoneTool.kind;
                     const rect={x:Math.min(start.gx,end.gx),z:Math.min(start.gz,end.gz),w:Math.abs(start.gx-end.gx)+1,h:Math.abs(start.gz-end.gz)+1};
                     e.stopImmediatePropagation();e.preventDefault();
                     this.createZone(kind,rect);exitBuildMode();this.cancelZone();
+                },true);
+                window.addEventListener('pointercancel',e=>{
+                    if(!this.zoneTool || e.pointerId!==this.zoneTool.pointerId)return;
+                    this.zoneTool.start=null;this.zoneTool.end=null;this.zoneTool.pointerId=null;
+                    if(this.zonePreview)this.zonePreview.visible=false;
                 },true);
             },
             drawZonePreview() {
@@ -7599,8 +7851,101 @@
             return spaV27PreviousExitBuild(...args);
         };
 
+
+        /********************************************************************
+         * V2.8 MOBILE/TABLET: UI-only settings, no game save/schema changes.
+         ********************************************************************/
+        const MobileUX={
+            isTouch:matchMedia('(pointer:coarse)').matches,
+            quality:'auto', effectiveQuality:'balanced', panMode:false,
+            shadowLight:null, fpsStart:0,frames:0,slowIntervals:0,
+            qualityKey:'SPA_TYCOON_UI_GRAPHICS_V28',
+            cameraFov(){return this.isTouch && window.innerWidth<600?55:this.isTouch && window.innerWidth<1024?46:40;},
+            defaultRadius(){return this.isTouch && window.innerWidth<600?32:this.isTouch && window.innerWidth<1024?25:21;},
+            init() {
+                let stored='auto';
+                try{stored=localStorage.getItem(this.qualityKey)||'auto';}catch(_){}
+                this.quality=['auto','smooth','balanced','pretty'].includes(stored)?stored:'auto';
+                this.effectiveQuality=this.quality==='auto'?(this.isTouch?'balanced':'pretty'):this.quality;
+                const select=document.getElementById('spa-quality-select');
+                if(select)select.value=this.quality;
+                this.updateCameraButton();
+                const guide=document.getElementById('mobile-gesture-guide');
+                if(guide && this.isTouch){
+                    guide.textContent='☝️ Kéo: xoay · ✌️ Chụm: zoom · 2 ngón: di chuyển';
+                    setTimeout(()=>{guide.style.display='none';},9500);
+                }
+            },
+            preset() {
+                const q=this.effectiveQuality;
+                return q==='smooth'?{dpr:0.95,shadows:false,shadowSize:512}:
+                    q==='balanced'?{dpr:1.25,shadows:true,shadowSize:1024}:
+                        {dpr:1.8,shadows:true,shadowSize:2048};
+            },
+            pixelRatio(){return Math.max(.7,Math.min(window.devicePixelRatio||1,this.preset().dpr));},
+            applyQuality() {
+                if(!renderer)return;
+                renderer.setPixelRatio(this.pixelRatio());
+                renderer.shadowMap.enabled=this.preset().shadows;
+                if(this.shadowLight) {
+                    const size=this.preset().shadowSize;
+                    const sh=this.shadowLight.shadow;
+                    if(sh.mapSize.width!==size) {
+                        sh.mapSize.set(size,size);
+                        if(sh.map){sh.map.dispose();sh.map=null;}
+                    }
+                    this.shadowLight.castShadow=this.preset().shadows;
+                }
+                renderer.shadowMap.needsUpdate=true;
+                renderer.setSize(window.innerWidth,window.innerHeight);
+            },
+            setQuality(value) {
+                if(!['auto','smooth','balanced','pretty'].includes(value))return;
+                this.quality=value;
+                this.effectiveQuality=value==='auto'?(this.isTouch?'balanced':'pretty'):value;
+                this.slowIntervals=0;
+                try{localStorage.setItem(this.qualityKey,value);}catch(_){}
+                this.applyQuality();
+                showToast('Đồ họa: '+({auto:'Tự động',smooth:'Mượt',balanced:'Cân bằng',pretty:'Đẹp'}[value]),'indigo');
+            },
+            tickPerformance(now){
+                if(!this.isTouch || this.quality!=='auto' || document.hidden)return;
+                if(!this.fpsStart){this.fpsStart=now;this.frames=0;return;}
+                this.frames++;
+                const elapsed=now-this.fpsStart;
+                if(elapsed<6000)return;
+                const fps=this.frames*1000/elapsed;
+                this.fpsStart=now;this.frames=0;
+                if(fps<28 && this.effectiveQuality!=='smooth')this.slowIntervals++;
+                else this.slowIntervals=0;
+                if(this.slowIntervals>=2){
+                    this.effectiveQuality='smooth';this.applyQuality();this.slowIntervals=0;
+                    showToast('Đã tự giảm chất lượng để chơi mượt hơn','sky');
+                }
+            },
+            toggleCameraMode(){this.panMode=!this.panMode;this.updateCameraButton();},
+            updateCameraButton(){
+                const button=document.getElementById('mobile-camera-switch');
+                if(!button)return;
+                button.innerHTML=this.panMode?'<i class="fa-solid fa-arrows-up-down-left-right"></i>':'<i class="fa-solid fa-hand"></i>';
+                const label=this.panMode?'Kéo 1 ngón để di chuyển bản đồ':'Kéo 1 ngón để xoay camera';
+                button.title=label;button.setAttribute('aria-label',label);
+                button.classList.toggle('bg-emerald-600',this.panMode);
+                button.classList.toggle('bg-indigo-600',!this.panMode);
+            },
+            syncHud(){
+                const copy=(id,txt)=>{const e=document.getElementById(id);if(e&&e.textContent!==txt)e.textContent=txt;};
+                copy('mobile-money',document.getElementById('hud-money')?.textContent||'');
+                copy('mobile-customers',document.getElementById('hud-customers')?.textContent||'');
+                const hh=document.getElementById('hud-clock')?.textContent||'06:00';
+                copy('mobile-time',`${gameState.day} · ${hh}`);
+                copy('mobile-level',`${gameState.level} · ${gameState.reputation.toFixed(1)}★`);
+            }
+        };
+
         window.onload = function () {
             initSpaControlDock();
+            MobileUX.init();
             initThreeScene();
             SpaLiving.init();
             SpaWorldV27.init();
@@ -7613,6 +7958,14 @@
             addGameLog('Chào mừng đến với SPA TYCOON – Đế Chế Làm Đẹp!');
             updateHUD();
             lastFrameTime = performance.now();
+            if(MobileUX.isTouch){
+                const persist=()=>{try{saveGameState(false);}catch(error){console.warn('Autosave on mobile failed',error);}};
+                window.addEventListener('pagehide',persist);
+                document.addEventListener('visibilitychange',()=>{
+                    if(document.hidden)persist();
+                    else {lastFrameTime=performance.now();MobileUX.fpsStart=0;}
+                });
+            }
             animateLoop(lastFrameTime);
         };
     </script>
